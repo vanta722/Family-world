@@ -9,3 +9,21 @@
 body {
   @apply bg-slate-50 text-slate-900;
 }
+
+@keyframes cinematic-cloud {
+  0% {
+    transform: translateX(-30%);
+  }
+  100% {
+    transform: translateX(520%);
+  }
+}
+
+.cinematic-cloud {
+  animation: cinematic-cloud 18s linear infinite;
+}
+
+.cinematic-cloud-delayed {
+  animation: cinematic-cloud 24s linear infinite;
+  animation-delay: -8s;
+}
