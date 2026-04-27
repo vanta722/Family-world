@@ -3,27 +3,146 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
-  @apply bg-slate-50 text-slate-900;
+  @apply bg-[#070412] text-slate-100;
 }
 
+/* ── Cloud / mist ── */
 @keyframes cinematic-cloud {
-  0% {
-    transform: translateX(-30%);
-  }
-  100% {
-    transform: translateX(520%);
-  }
+  0%   { transform: translateX(-30%); }
+  100% { transform: translateX(520%); }
+}
+.cinematic-cloud         { animation: cinematic-cloud 18s linear infinite; }
+.cinematic-cloud-delayed { animation: cinematic-cloud 24s linear infinite; animation-delay: -8s; }
+
+/* ── Hero float ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+/* ── Gate pulse glow ── */
+@keyframes gate-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(167,139,250,0.7)); }
+  50%       { filter: drop-shadow(0 0 24px rgba(167,139,250,1)) drop-shadow(0 0 48px rgba(99,102,241,0.5)); }
+}
+.animate-gate-glow { animation: gate-glow 3s ease-in-out infinite; }
+
+/* ── Star twinkle ── */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.5); }
 }
 
-.cinematic-cloud {
-  animation: cinematic-cloud 18s linear infinite;
+/* ── Screen shake ── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-10px) rotate(-1deg); }
+  30%       { transform: translateX(10px)  rotate(1deg); }
+  45%       { transform: translateX(-7px); }
+  60%       { transform: translateX(7px); }
+  75%       { transform: translateX(-4px); }
+  90%       { transform: translateX(4px); }
+}
+.animate-shake { animation: shake 0.5s ease-in-out; }
+
+/* ── Victory bounce ── */
+@keyframes victory-bounce {
+  0%, 100% { transform: scale(1) translateY(0); }
+  30%       { transform: scale(1.25) translateY(-10px) rotate(-5deg); }
+  60%       { transform: scale(1.1)  translateY(-4px)  rotate(3deg); }
+}
+.animate-victory { animation: victory-bounce 0.6s ease-out; }
+
+/* ── Combo pop ── */
+@keyframes combo-pop {
+  0%   { transform: scale(0.3); opacity: 0; }
+  55%  { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.animate-combo-pop { animation: combo-pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+
+/* ── Epic title reveal ── */
+@keyframes epic-reveal {
+  0%   { transform: scale(0.6) translateY(20px); opacity: 0; letter-spacing: 0.3em; }
+  70%  { transform: scale(1.05) translateY(-2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); }
+}
+.animate-epic-reveal { animation: epic-reveal 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+/* ── Screen flash ── */
+@keyframes screen-flash {
+  0%        { opacity: 0; }
+  20%       { opacity: 1; }
+  100%      { opacity: 0; }
+}
+.animate-screen-flash { animation: screen-flash 0.4s ease-out forwards; }
+
+/* ── Particle burst ── */
+@keyframes particle-burst {
+  0%   { transform: translate(0, 0) scale(1);   opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
 }
 
-.cinematic-cloud-delayed {
-  animation: cinematic-cloud 24s linear infinite;
-  animation-delay: -8s;
+/* ── Lightning strike ── */
+@keyframes lightning {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  20%  { opacity: 0.2; }
+  35%  { opacity: 0.9; }
+  50%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.animate-lightning { animation: lightning 0.6s ease-out forwards; }
+
+/* ── Token float up ── */
+@keyframes token-float {
+  0%   { transform: translateY(0)    scale(1);   opacity: 1; }
+  100% { transform: translateY(-70px) scale(1.4); opacity: 0; }
+}
+.animate-token { animation: token-float 1.2s ease-out forwards; }
+
+/* ── Slide in from bottom ── */
+@keyframes slide-up {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.animate-slide-up { animation: slide-up 0.4s ease-out forwards; }
+
+/* ── Ambient background scroll ── */
+@keyframes bg-pan {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-bg-pan { animation: bg-pan 12s ease infinite; background-size: 200% 200%; }
+
+/* ── Hero enter ── */
+@keyframes hero-enter {
+  from { transform: translateX(-60px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+.animate-hero-enter { animation: hero-enter 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.3s both; }
+
+/* ── Pulse ring ── */
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.animate-pulse-ring { animation: pulse-ring 1s ease-out infinite; }
+
+/* ── Scanline CRT effect (subtle) ── */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
 }
