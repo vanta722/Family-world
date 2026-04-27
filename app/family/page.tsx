@@ -63,7 +63,7 @@ export default async function FamilyPage() {
             Choose Your Hero
           </h1>
           <p className="text-sm text-violet-300/60">
-            Select a champion to begin today's quest
+            Select a champion to begin today&apos;s quest
           </p>
         </div>
       </div>
