@@ -26,7 +26,7 @@ export default async function ParentPage() {
       .limit(10),
     supabase
       .from('transactions')
-      .select('id, amount, reason, profiles(display_name), attempts(submitted_at)')
+      .select('id, amount, type, reason, profiles(display_name), attempts(submitted_at)')
       .eq('household_id', household.id)
       .eq('status', 'pending')
       .order('created_at', { ascending: false }),
@@ -84,26 +84,47 @@ export default async function ParentPage() {
 
       <Panel title="Approval Queue">
         <div className="space-y-2">
-          {(pending ?? []).map((row) => (
-            <div key={row.id} className="flex items-center justify-between rounded border p-3">
-              <div>
-                <p className="font-medium">{(row.profiles as { display_name?: string } | null)?.display_name ?? 'Kid'}</p>
-                <p className="text-sm text-slate-600">+{row.amount} • {row.reason}</p>
+          {(pending ?? []).length === 0 && (
+            <p className="text-sm text-slate-500">No pending approvals.</p>
+          )}
+          {(pending ?? []).map((row) => {
+            const isRedeem = (row as { type?: string }).type === 'redeem';
+            return (
+              <div key={row.id} className={`flex items-center justify-between rounded-lg border p-3 ${isRedeem ? 'border-amber-200 bg-amber-50' : 'border-green-100 bg-green-50'}`}>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${isRedeem ? 'bg-amber-200 text-amber-800' : 'bg-green-200 text-green-800'}`}>
+                      {isRedeem ? '🛒 Redeem' : '⭐ Earn'}
+                    </span>
+                    <p className="font-semibold text-slate-800">
+                      {(row.profiles as { display_name?: string } | null)?.display_name ?? 'Kid'}
+                    </p>
+                  </div>
+                  <p className="mt-0.5 text-sm text-slate-600">
+                    {isRedeem
+                      ? `${row.reason} • costs ${Math.abs(row.amount)} tokens`
+                      : `${row.reason} • +${row.amount} tokens`}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <form action={moderateTransactionAction}>
+                    <input type="hidden" name="transactionId" value={row.id} />
+                    <input type="hidden" name="status" value="approved" />
+                    <button className="rounded-lg bg-green-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-green-700">
+                      ✓ Approve
+                    </button>
+                  </form>
+                  <form action={moderateTransactionAction}>
+                    <input type="hidden" name="transactionId" value={row.id} />
+                    <input type="hidden" name="status" value="rejected" />
+                    <button className="rounded-lg bg-rose-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-rose-700">
+                      ✕ Reject
+                    </button>
+                  </form>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <form action={moderateTransactionAction}>
-                  <input type="hidden" name="transactionId" value={row.id} />
-                  <input type="hidden" name="status" value="approved" />
-                  <button className="rounded bg-green-600 px-3 py-1 text-white">Approve</button>
-                </form>
-                <form action={moderateTransactionAction}>
-                  <input type="hidden" name="transactionId" value={row.id} />
-                  <input type="hidden" name="status" value="rejected" />
-                  <button className="rounded bg-rose-600 px-3 py-1 text-white">Reject</button>
-                </form>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </Panel>
 

@@ -48,16 +48,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {user ? (
                 <>
                   <Link
-                    href="/family"
+                    href="/world"
                     className="rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-300/80 transition hover:bg-violet-800/30 hover:text-violet-200"
                   >
-                    Heroes
+                    🗺️ World
                   </Link>
                   <Link
                     href="/play"
                     className="rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-300/80 transition hover:bg-violet-800/30 hover:text-violet-200"
                   >
-                    Play
+                    ⚔️ Battle
+                  </Link>
+                  <Link
+                    href="/shop"
+                    className="rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-300/80 transition hover:bg-violet-800/30 hover:text-violet-200"
+                  >
+                    🏪 Shop
+                  </Link>
+                  <Link
+                    href="/family"
+                    className="rounded-lg px-3 py-1.5 text-xs font-semibold text-violet-300/80 transition hover:bg-violet-800/30 hover:text-violet-200"
+                  >
+                    Heroes
                   </Link>
                   <Link
                     href="/parent"

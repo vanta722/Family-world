@@ -405,7 +405,7 @@ export function MathKingdom({ question }: { question: LessonQuestion }) {
           {question.prompt}
         </p>
         <p className="relative z-10 mt-1 text-center text-xs uppercase tracking-widest text-violet-500/60">
-          Shadow Wizard&apos;s Riddle
+          Shadow Wizard's Riddle
         </p>
       </div>
 
