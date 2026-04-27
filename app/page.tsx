@@ -72,15 +72,21 @@ export default function HomePage() {
           {/* CTA buttons */}
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/family"
+              href="/world"
               className="relative overflow-hidden rounded-2xl px-8 py-4 text-base font-black text-white shadow-xl transition-all duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
               style={{
                 background: 'linear-gradient(135deg,#7C3AED,#06B6D4)',
                 boxShadow: '0 0 20px rgba(124,58,237,0.5)',
               }}
             >
-              <span className="relative z-10">⚔️ Enter the Kingdom</span>
+              <span className="relative z-10">🗺️ Enter the Kingdom</span>
               <div className="absolute inset-0 bg-white/0 hover:bg-white/10 transition-colors" />
+            </Link>
+            <Link
+              href="/shop"
+              className="rounded-2xl border border-brand-gold/40 bg-brand-gold/10 px-8 py-4 text-base font-bold text-brand-gold backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-brand-gold/70 hover:bg-brand-gold/20 active:scale-95"
+            >
+              🏪 Token Emporium
             </Link>
             <Link
               href="/parent"
@@ -93,8 +99,14 @@ export default function HomePage() {
       </div>
 
       {/* ── Feature pillars ──────────────────────────────────────────────────── */}
-      <div className="grid gap-4 pt-6 sm:grid-cols-3">
+      <div className="grid gap-4 pt-6 sm:grid-cols-2 lg:grid-cols-3">
         {[
+          {
+            icon:  '🗺️',
+            title: 'Free Roam Kingdom',
+            desc:  'Walk through the Crystal Kingdom — visit zones, find NPCs, and discover new challenges around every corner.',
+            glow:  '#06B6D4',
+          },
           {
             icon:  '🧙‍♂️',
             title: 'Battle Wizards',
@@ -103,8 +115,8 @@ export default function HomePage() {
           },
           {
             icon:  '✨',
-            title: 'Earn Tokens',
-            desc:  'Every correct answer earns Royal Tokens — redeem them for real-world rewards your parents create.',
+            title: 'Earn & Spend Tokens',
+            desc:  'Every correct answer earns Royal Tokens — spend them at the Token Emporium for real-world rewards.',
             glow:  '#F59E0B',
           },
           {
@@ -112,6 +124,18 @@ export default function HomePage() {
             title: 'Build Combos',
             desc:  'Chain correct answers into legendary COMBO streaks. Three in a row unleashes a power strike!',
             glow:  '#EF4444',
+          },
+          {
+            icon:  '🏆',
+            title: 'Family Leaderboard',
+            desc:  'See who\'s earned the most tokens in your household. Compete with siblings for the top spot!',
+            glow:  '#F59E0B',
+          },
+          {
+            icon:  '📋',
+            title: 'Daily Quests',
+            desc:  'New challenge every day — complete the Crystal Gauntlet to show your dedication to the kingdom.',
+            glow:  '#34D399',
           },
         ].map(({ icon, title, desc, glow }) => (
           <div
