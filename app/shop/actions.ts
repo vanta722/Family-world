@@ -5,25 +5,25 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { getActiveProfileId } from '@/lib/auth/active-profile';
 import { getApprovedTokenBalance } from '@/lib/tokens/balance';
 
-export async function redeemRewardAction(formData: FormData) {
+export async function redeemRewardAction(formData: FormData): Promise<void> {
   const rewardId  = String(formData.get('rewardId') || '');
   const tokenCost = Number(formData.get('tokenCost') || 0);
   const title     = String(formData.get('title') || '');
 
   const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user || !rewardId) return { error: 'Unauthorized' };
+  if (!user || !rewardId) return;
 
   const profileId = await getActiveProfileId();
-  if (!profileId) return { error: 'No active profile' };
+  if (!profileId) return;
 
   const { data: household } = await supabase
     .from('households').select('id').eq('parent_user_id', user.id).single();
-  if (!household) return { error: 'No household' };
+  if (!household) return;
 
   // Guard: enough tokens?
   const balance = await getApprovedTokenBalance(profileId);
-  if (balance < tokenCost) return { error: 'Not enough tokens' };
+  if (balance < tokenCost) return;
 
   // Check reward belongs to this household and is active
   const { data: reward } = await supabase
@@ -33,7 +33,7 @@ export async function redeemRewardAction(formData: FormData) {
     .eq('household_id', household.id)
     .eq('is_active', true)
     .single();
-  if (!reward) return { error: 'Reward not found' };
+  if (!reward) return;
 
   // Create a pending redemption transaction (negative amount = debit on approval)
   await supabase.from('transactions').insert({
@@ -47,5 +47,4 @@ export async function redeemRewardAction(formData: FormData) {
 
   revalidatePath('/shop');
   revalidatePath('/world');
-  return { success: true };
 }
