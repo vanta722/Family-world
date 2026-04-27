@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  telegram-bot:
+    image: node:22-alpine
+    working_dir: /app
+    command: ["sh", "-c", "echo TODO: telegram worker"]
+    restart: unless-stopped
+    env_file:
+      - .env
+
+  scheduler:
+    image: node:22-alpine
+    working_dir: /app
+    command: ["sh", "-c", "echo TODO: scheduled jobs worker"]
+    restart: unless-stopped
+    env_file:
+      - .env
+
+  agent-runner:
+    image: node:22-alpine
+    working_dir: /app
+    command: ["sh", "-c", "echo TODO: agent runner"]
+    restart: unless-stopped
+    env_file:
+      - .env
