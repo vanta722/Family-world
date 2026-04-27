@@ -1,12 +1,28 @@
 import './globals.css';
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { createServerSupabase } from '@/lib/supabase/server';
 import { signOutAction } from '@/app/auth/login/actions';
 
+export const viewport: Viewport = {
+  themeColor: '#0f0a1e',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: 'Family Learning World',
-  description: 'Private family cinematic learning adventure'
+  title: {
+    default:  'Family Learning World',
+    template: '%s · Family Learning World',
+  },
+  description: 'A cinematic family learning adventure — battle wizards, earn tokens, explore the Crystal Kingdom.',
+  openGraph: {
+    title:       'Family Learning World',
+    description: 'A cinematic family learning adventure for kids.',
+    type:        'website',
+    locale:      'en_US',
+  },
+  robots: { index: false, follow: false }, // private family app — stay off search engines
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

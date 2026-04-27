@@ -1,9 +1,14 @@
 import { verifyParentPinAction } from './actions';
 
-export default function ParentPinPage() {
+interface Props {
+  searchParams: Promise<{ error?: string }>;
+}
+
+export default async function ParentPinPage({ searchParams }: Props) {
+  const { error } = await searchParams;
+
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-4">
-      {/* Ambient glow */}
       <div className="pointer-events-none fixed inset-0 z-0"
            style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(183,148,244,0.07) 0%, transparent 65%)' }} />
 
@@ -14,12 +19,10 @@ export default function ParentPinPage() {
           boxShadow: '0 0 60px rgba(183,148,244,0.12), 0 25px 50px rgba(0,0,0,0.5)',
         }}
       >
-        {/* Top accent */}
         <div className="h-1 w-full"
              style={{ background: 'linear-gradient(90deg,transparent,#B794F4 30%,#06B6D4 70%,transparent)' }} />
 
         <div className="px-8 py-10 text-center space-y-6">
-          {/* Icon */}
           <div className="relative mx-auto w-fit">
             <div className="absolute inset-0 -m-3 rounded-full animate-pulse-ring border-2 border-brand-lilac/30" />
             <div
@@ -30,7 +33,6 @@ export default function ParentPinPage() {
             </div>
           </div>
 
-          {/* Title */}
           <div>
             <h1
               className="text-2xl font-black"
@@ -45,7 +47,13 @@ export default function ParentPinPage() {
             <p className="mt-1 text-sm text-violet-400/60">Enter your 4-digit Parent PIN to continue</p>
           </div>
 
-          {/* PIN form */}
+          {/* Error alert */}
+          {error === 'wrong-pin' && (
+            <div className="rounded-xl border border-red-500/30 bg-red-900/20 px-4 py-3 text-sm font-semibold text-red-300">
+              ⚠️ Incorrect PIN — try again
+            </div>
+          )}
+
           <form action={verifyParentPinAction} className="space-y-4">
             <input
               name="pin"
@@ -55,11 +63,12 @@ export default function ParentPinPage() {
               maxLength={4}
               placeholder="• • • •"
               required
+              autoFocus
               className="w-full rounded-2xl border border-violet-700/40 bg-violet-900/20 px-5 py-4 text-center text-2xl font-black tracking-[0.5em] text-white placeholder-violet-600/40 outline-none transition focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/20"
             />
             <button
               type="submit"
-              className="w-full rounded-2xl py-3.5 text-base font-black text-white shadow-xl transition-all duration-200 hover:scale-[1.02] hover:shadow-brand-lilac/20 active:scale-[0.98]"
+              className="w-full rounded-2xl py-3.5 text-base font-black text-white shadow-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
               style={{ background: 'linear-gradient(135deg,#7C3AED,#B794F4)' }}
             >
               ⚡ Enter the Council Chambers

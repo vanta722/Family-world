@@ -45,5 +45,15 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/family/:path*', '/play/:path*', '/parent/:path*', '/onboarding/:path*', '/onboarding']
+  matcher: [
+    '/family/:path*',
+    '/play/:path*',
+    '/parent/:path*',
+    '/onboarding/:path*',
+    '/onboarding',
+    '/world/:path*',
+    '/world',
+    '/shop/:path*',
+    '/shop',
+  ],
 };
